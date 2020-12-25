@@ -10,7 +10,6 @@ module.exports = {
     sourceType: 'module',
   },
   rules: {
-    'import/no-extraneous-dependencies': ['error', { devDependencies: true }],
     'no-console': process.env.NODE_ENV === 'production' ? 2 : 0,
     'no-debugger': process.env.NODE_ENV === 'production' ? 2 : 0,
   },
