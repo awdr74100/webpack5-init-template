@@ -5,6 +5,7 @@ module.exports = {
   },
   parser: 'babel-eslint',
   extends: ['airbnb-base'],
+  ignorePatterns: ['dist/', 'node_modules/'],
   parserOptions: {
     ecmaVersion: 12,
     sourceType: 'module',
