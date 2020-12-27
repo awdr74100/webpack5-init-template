@@ -3,9 +3,14 @@ module.exports = {
     browser: true,
     es2021: true,
   },
-  parser: 'babel-eslint',
+  parser: '@babel/eslint-parser',
   extends: ['airbnb-base'],
-  ignorePatterns: ['dist/', 'node_modules/'],
+  settings: {
+    'import/resolver': {
+      node: {},
+      webpack: { config: 'webpack.config.js' },
+    },
+  },
   parserOptions: {
     ecmaVersion: 12,
     sourceType: 'module',

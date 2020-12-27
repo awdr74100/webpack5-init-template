@@ -1,2 +1,2 @@
-import './css/all.css';
-import './js/all';
+import '@/js/all';
+import '@/scss/all.scss';

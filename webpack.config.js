@@ -4,6 +4,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
 const ESLintPlugin = require('eslint-webpack-plugin');
+const StylelintPlugin = require('stylelint-webpack-plugin');
 
 const isProd = process.env.NODE_ENV === 'production';
 
@@ -22,6 +23,7 @@ module.exports = {
     compress: true,
     overlay: true,
     hot: false,
+    host: 'localhost',
     client: { logging: 'warn' },
   },
   module: {
@@ -32,11 +34,12 @@ module.exports = {
         use: ['babel-loader'],
       },
       {
-        test: /\.css$/i,
+        test: /\.s[ac]ss$/i,
         use: [
           isProd ? MiniCssExtractPlugin.loader : 'style-loader',
           'css-loader',
           'postcss-loader',
+          'sass-loader',
         ],
       },
       {
@@ -65,6 +68,10 @@ module.exports = {
       filename: 'css/[contenthash].css',
     }),
     new ESLintPlugin(),
+    new StylelintPlugin({
+      files: ['**/*.{vue,html,css,scss}'],
+      ignorePath: path.resolve(__dirname, '.gitignore'),
+    }),
   ],
   resolve: {
     alias: {
