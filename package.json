@@ -7,7 +7,7 @@
     "dev": "cross-env NODE_ENV=development webpack serve",
     "build": "cross-env NODE_ENV=production webpack",
     "lint": "npm run lint:js && npm run lint:style",
-    "lint:js": "cross-env NODE_ENV=production eslint --ignore-path .gitignore .",
+    "lint:js": "cross-env NODE_ENV=production eslint --ext .js,.vue --ignore-path .gitignore .",
     "lint:style": "cross-env NODE_ENV=production stylelint --ignore-path .gitignore **/*.{vue,html,css,scss}"
   },
   "keywords": [],
