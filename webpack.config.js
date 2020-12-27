@@ -11,11 +11,12 @@ const isProd = process.env.NODE_ENV === 'production';
 module.exports = {
   mode: process.env.NODE_ENV,
   devtool: isProd ? 'source-map' : 'eval-cheap-module-source-map',
-  entry: './src/main.js',
+  entry: path.resolve(__dirname, 'src/main.js'),
   output: {
     publicPath: '/',
     path: path.resolve(__dirname, 'dist'),
     filename: 'js/[contenthash].js',
+    assetModuleFilename: 'img/[name].[hash][ext]',
   },
   devServer: {
     port: 9000,
@@ -36,33 +37,34 @@ module.exports = {
       {
         test: /\.s[ac]ss$/i,
         use: [
-          isProd ? MiniCssExtractPlugin.loader : 'style-loader',
+          MiniCssExtractPlugin.loader,
           'css-loader',
           'postcss-loader',
           'sass-loader',
         ],
       },
       {
-        test: /\.(png|jpe?g|gif|svg)$/i,
-        use: [
-          {
-            loader: 'url-loader',
-            options: {
-              limit: 8192,
-              name: 'img/[name].[ext]',
-            },
+        test: /\.(png|jpe?g|gif|webp)$/i,
+        type: 'asset',
+        parser: {
+          dataUrlCondition: {
+            maxSize: 8 * 1024, // 4kb
           },
-        ],
+        },
+      },
+      {
+        test: /\.(svg)$/i,
+        type: 'asset/resource',
       },
     ],
   },
   plugins: [
     new CleanWebpackPlugin(),
     new HtmlWebpackPlugin({
-      template: './index.html',
+      template: path.resolve(__dirname, 'src/index.html'),
       filename: 'index.html',
-      title: '測試',
-      favicon: './public/favicon.ico',
+      title: '模板',
+      favicon: path.resolve(__dirname, 'public/favicon.ico'),
     }),
     new MiniCssExtractPlugin({
       filename: 'css/[contenthash].css',
@@ -80,7 +82,9 @@ module.exports = {
     extensions: ['.js', '.json', '.vue'],
   },
   optimization: {
+    minimize: isProd,
     minimizer: [
+      '...', // extend existing minimizers
       new CssMinimizerPlugin({
         sourceMap: true,
         minimizerOptions: {
