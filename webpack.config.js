@@ -5,6 +5,7 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
 const ESLintPlugin = require('eslint-webpack-plugin');
 const StylelintPlugin = require('stylelint-webpack-plugin');
+const CopyPlugin = require('copy-webpack-plugin');
 
 const isProd = process.env.NODE_ENV === 'production';
 
@@ -73,6 +74,18 @@ module.exports = {
     new StylelintPlugin({
       files: ['**/*.{vue,html,css,scss}'],
       ignorePath: path.resolve(__dirname, '.gitignore'),
+    }),
+    new CopyPlugin({
+      patterns: [
+        {
+          from: path.resolve(__dirname, 'public'),
+          to: path.resolve(__dirname, 'dist'),
+          globOptions: {
+            dot: true,
+            ignore: ['**/favicon.ico'], // use html-webpack-plugin
+          },
+        },
+      ],
     }),
   ],
   resolve: {
