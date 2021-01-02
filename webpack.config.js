@@ -80,6 +80,7 @@ module.exports = {
         {
           from: path.resolve(__dirname, 'public'),
           to: path.resolve(__dirname, 'dist'),
+          noErrorOnMissing: true,
           globOptions: {
             dot: true,
             ignore: ['**/favicon.ico'], // use html-webpack-plugin
