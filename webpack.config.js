@@ -22,11 +22,12 @@ module.exports = {
   devServer: {
     port: 9000,
     open: true,
+    hot: true,
     compress: true,
-    overlay: true,
-    hot: false,
-    host: 'localhost',
-    client: { logging: 'warn' },
+    client: {
+      logging: 'warn',
+      overlay: true,
+    },
   },
   module: {
     rules: [
